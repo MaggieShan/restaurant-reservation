@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { fetchData } from "./AwsFunctions.js";
+import { fetchData } from "../lib/AwsFunctions.js";
 
 export default function User() {
   const getData = () => {
