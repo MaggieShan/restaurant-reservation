@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import React, { useEffect, useState } from "react";
 import {
   Accordion,
@@ -31,9 +32,9 @@ const dateStyle = {
   font: '30px',
 }
 
-type Reservation = {
-  date: string,
+export type Reservation = {
   name: string,
+  date: string,
   userid: string,
   duration: number,
   start_time: string,
@@ -110,7 +111,6 @@ export default function Restaurant() {
         </h2>
         <AccordionPanel pb={4}>
           {reservations?.map(element => {
-            console.log(element.start_time === time)
             if (element.start_time === time) { 
             return (
               <Box style={boxStyle} key={element.userid}>

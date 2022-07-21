@@ -15,13 +15,16 @@
     "@emotion/styled": "^11",
     "aws-sdk": "^2.1172.0",
     "framer-motion": "^6",
+    "moment": "^2.29.4",
     "next": "12.2.2",
     "react": "18.2.0",
+    "react-datepicker": "^4.8.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@types/node": "18.0.3",
     "@types/react": "18.0.15",
+    "@types/react-datepicker": "^4.4.2",
     "@types/react-dom": "18.0.6",
     "eslint": "8.19.0",
     "eslint-config-next": "12.2.2",
