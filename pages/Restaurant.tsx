@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-key */
 import React, { useEffect, useState } from "react";
 import {
   Accordion,
@@ -108,7 +107,7 @@ export default function Restaurant() {
     <div style={dateStyle}>Date: {date}</div>
     <Accordion allowToggle>
     {times?.map(time => (
-      <AccordionItem>
+      <AccordionItem key={time}>
         <h2>
           <AccordionButton>
             <Box flex='1' textAlign='left'>

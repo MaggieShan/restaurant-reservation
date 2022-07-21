@@ -1,5 +1,4 @@
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
-import Developer from './Developer'
 import Restaurant from './Restaurant'
 import User from './User'
 
@@ -9,7 +8,6 @@ export default function UserTabs() {
       <TabList>
         <Tab>Customer</Tab>
         <Tab>Restaurant</Tab>
-        <Tab>Developer</Tab>
       </TabList>
 
       <TabPanels>
@@ -18,9 +16,6 @@ export default function UserTabs() {
         </TabPanel>
         <TabPanel>
           <Restaurant />
-        </TabPanel>
-        <TabPanel>
-          <Developer />
         </TabPanel>
       </TabPanels>
     </Tabs>
