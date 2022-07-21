@@ -33,6 +33,7 @@ const dateStyle = {
 
 type Reservation = {
   date: string,
+  name: string,
   userid: string,
   duration: number,
   start_time: string,
@@ -44,6 +45,7 @@ type Reservation = {
 
 export default function Restaurant() {
   const [reservations, updateRes] = useState<Reservation[]>();
+  const times = ["08:00:00\t", "09:00:00\t", "10:00:00\t", "11:00:00\t", "12:00:00\t", "13:00:00\t", "14:00:00\t", "15:00:00\t", "16:00:00\t", "17:00:00\t", "18:00:00\t", "19:00:00\t", "20:00:00\t"];
 
   const getReservationsByDate = () => {
     var params = {
@@ -70,6 +72,7 @@ export default function Restaurant() {
             for(var i = 0; i < res_list.length; i++){
               var res_obj = {
                 date: object_output.Items[i].date,
+                name: object_output.Items[i].name,
                 userid: object_output.Items[i].userid,
                 duration: object_output.Items[i].duration,
                 start_time: object_output.Items[i].start_time,
@@ -84,11 +87,10 @@ export default function Restaurant() {
         }
     });
   }
-  
 
   useEffect(() => {
     getReservationsByDate()
-  })
+  }, [])
 
   const date = new Date().toDateString();
 
@@ -96,30 +98,34 @@ export default function Restaurant() {
     <div>
     <div style={dateStyle}>Date: {date}</div>
     <Accordion allowToggle>
+    {times?.map(time => (
       <AccordionItem>
         <h2>
           <AccordionButton>
             <Box flex='1' textAlign='left'>
-              Section 1 title
+              {time}
             </Box>
             <AccordionIcon />
           </AccordionButton>
         </h2>
         <AccordionPanel pb={4}>
-            {reservations?.map(element => (
+          {reservations?.map(element => {
+            console.log(element.start_time === time)
+            if (element.start_time === time) { 
+            return (
               <Box style={boxStyle} key={element.userid}>
               <Popover>
               <PopoverTrigger>
-                <Button>{element.userid}</Button>
+                <Button>{element.name}</Button>
               </PopoverTrigger>
               <PopoverContent>
                 <PopoverArrow />
                 <PopoverCloseButton />
                 <PopoverHeader>{element.userid}</PopoverHeader>
                 <PopoverBody>
-                Name: {element.userid}
+                Email: {element.userid}
                 <br/>
-                Time: {element.start_time}
+                Time: {element.start_time} - {element.end_time}
                 <br/>
                 Duration: {element.duration} minutes
                 <br/>
@@ -130,26 +136,11 @@ export default function Restaurant() {
               </PopoverContent>
             </Popover>
             </Box>
-            ))}
+          )}}
+          )}
         </AccordionPanel>
       </AccordionItem>
-
-      <AccordionItem>
-        <h2>
-          <AccordionButton>
-            <Box flex='1' textAlign='left'>
-              Section 2 title
-            </Box>
-            <AccordionIcon />
-          </AccordionButton>
-        </h2>
-        <AccordionPanel pb={4}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-          veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-          commodo consequat.
-        </AccordionPanel>
-      </AccordionItem>
+    ))}
     </Accordion>
     </div>
   )
