@@ -9,6 +9,7 @@ import {
   FormHelperText,
   Input,
   Switch,
+  useToast,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
@@ -18,9 +19,16 @@ import {
 import DatePicker, { CalendarContainer } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment';
-import * as AWS from 'aws-sdk'
+import * as AWS from 'aws-sdk';
+import styled from '@emotion/styled';
 
-
+const StyledDatePicker = styled(DatePicker)`
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #EDF2F7;
+  cursor: pointer;
+`;
 
 export default function User() {
   const [email, setEmail] = useState("");
@@ -31,10 +39,9 @@ export default function User() {
   const [phone, setPhone] = useState("");
   const [visitors, setVisitors] = useState(1);
   const [special, setSpecial] = useState("no");
-  const [reservations, updateRes] = useState<Reservation[]>();
-  
-  const moment = require('moment');
+
   const docClient = new AWS.DynamoDB.DocumentClient()
+  const toast = useToast();
 
   const parse = (val: string) => Number(val.replace(/^\$/, ''));
 
@@ -58,13 +65,26 @@ export default function User() {
 
     docClient.put(params, function (err, data) {
       if (err) {
-          console.log('Error', err)
+        toast({
+          title: 'Error',
+          description: "Failed to add reservation",
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });  
+        console.log('Error', err)
       } else {
-          console.log('Success', data)
+        toast({
+          title: 'Success',
+          description: "Reservation added",
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+        });
+        console.log('Success', data)
       }
     })
   }
-
 
   // Calculate end time
   useEffect(() => {
@@ -103,9 +123,9 @@ export default function User() {
           pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
         />
       </FormControl>
-      <DatePicker 
+      <StyledDatePicker 
         selected={startDate}
-        onChange={(date) => date ? setStartDate(date) : null}
+        onChange={(date: Date) => date ? setStartDate(date) : null}
         showTimeSelect
         timeFormat="HH:mm"
         timeIntervals={60}
@@ -153,7 +173,7 @@ export default function User() {
           onChange={(e) => setSpecial(e.target.checked ? "yes" : "no")}
         />
       </FormControl>
-      <Button type="submit">Reserve</Button>
+      <Button backgroundColor="#cd4346ff" color="white" type="submit">Reserve</Button>
     </form>
    </>
   )
