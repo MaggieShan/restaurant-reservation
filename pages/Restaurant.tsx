@@ -38,14 +38,14 @@ type Reservation = {
   duration: number,
   start_time: string,
   end_time: string,
-  phone: number,
+  phone: string,
   special_occasion: boolean,
   visitors: number,
 }
 
 export default function Restaurant() {
   const [reservations, updateRes] = useState<Reservation[]>();
-  const times = ["08:00:00\t", "09:00:00\t", "10:00:00\t", "11:00:00\t", "12:00:00\t", "13:00:00\t", "14:00:00\t", "15:00:00\t", "16:00:00\t", "17:00:00\t", "18:00:00\t", "19:00:00\t", "20:00:00\t"];
+  const times = ["08:00:00", "09:00:00", "10:00:00", "11:00:00", "12:00:00", "13:00:00", "14:00:00", "15:00:00", "16:00:00", "17:00:00", "18:00:00", "19:00:00", "20:00:00"];
 
   const getReservationsByDate = () => {
     var params = {
