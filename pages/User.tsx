@@ -48,6 +48,7 @@ const StyledBox = styled(Box)`
 export default function User() {
   const [adding, setAdding] = useState(false);
   const [checking, setChecking] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [startDate, setStartDate] = useState(new Date());
@@ -276,12 +277,60 @@ export default function User() {
             <Button backgroundColor="#cd4346ff" color="white" type="submit">Check Reservation</Button>
           </form>
         
-        {reservation &&
+        {reservation && submitted &&
           <StyledBox>
             <h2>Reservation for: {reservation.name}</h2>
             <p>Date: {reservation.date}</p>
             <p>Time: {reservation.start_time} to {reservation.end_time}</p>
             <p>Table for: {reservation.visitors} guests </p>
+          </StyledBox>
+        }
+      </>
+    );
+  }
+
+
+  // Delete a reservation
+  const DeleteReservationsByEmail = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    var params = {
+        TableName: "reservations",
+        Key: {
+          "#userid": email,
+        }
+    } 
+  
+    docClient.delete(params, function(err) {
+        if (err) {
+            console.error("Could not delete reservations");
+        } else {
+            console.log("Reservations deleted");
+            }
+        }
+      );
+    }
+
+  const DeleteReservation = () => {
+    return (
+      <>
+        <form onSubmit={DeleteReservationsByEmail}>
+            <StyledBox>
+              <FormControl isRequired>
+                <FormLabel>Email</FormLabel>
+                <Input 
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder='name@email.com' 
+                />
+              </FormControl>
+            </StyledBox>
+            <Button backgroundColor="#cd4346ff" color="white" type="submit">Delete Reservation</Button>
+          </form>
+        
+        {reservation && submitted &&
+          <StyledBox>
+            <h2>Reservation successfully deleted! </h2>
           </StyledBox>
         }
       </>
@@ -295,12 +344,14 @@ export default function User() {
           What would you like to do today?
         </MenuButton>
         <MenuList>
-          <MenuItem onClick={() => {setAdding(!adding); setChecking(false); setSubmitted(false)}}>Reserve a table</MenuItem>
-          <MenuItem onClick={() => {setChecking(!checking); setAdding(false); setSubmitted(false)}}>Check reservation</MenuItem>
+          <MenuItem onClick={() => {setAdding(!adding); setChecking(false); setSubmitted(false); setDeleting(false)}}>Reserve a table</MenuItem>
+          <MenuItem onClick={() => {setChecking(!checking); setAdding(false); setSubmitted(false); setDeleting(false)}}>Check reservation</MenuItem>
+          <MenuItem onClick={() => {setDeleting(!deleting); setAdding(false); setChecking(false); setSubmitted(false)}}>Delete reservation</MenuItem>
         </MenuList>
       </Menu>
       {adding && <AddReservation />}
       {checking && <CheckReservation />}
+      {deleting && <DeleteReservation />}
     </>
   );
 }
