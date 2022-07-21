@@ -277,7 +277,7 @@ export default function User() {
             <Button backgroundColor="#cd4346ff" color="white" type="submit">Check Reservation</Button>
           </form>
         
-        {reservation && submitted &&
+        {reservation && 
           <StyledBox>
             <h2>Reservation for: {reservation.name}</h2>
             <p>Date: {reservation.date}</p>
