@@ -56,7 +56,7 @@ export default function Restaurant() {
             "#date": "date"
         },
         ExpressionAttributeValues: {
-            ":v_date": "2022-07-19"
+            ":v_date": "2022-07-21"
         }
     } 
   
@@ -127,7 +127,7 @@ export default function Restaurant() {
                 <br/>
                 Time: {element.start_time} - {element.end_time}
                 <br/>
-                Duration: {element.duration} minutes
+                Duration: {element.duration} hr(s)
                 <br/>
                 Visitors: {element.visitors}
                 <br/>
