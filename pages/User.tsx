@@ -65,7 +65,8 @@ export default function User() {
   const parse = (val: string) => Number(val.replace(/^\$/, ''));
 
   // Add reservation
-  const addReservation = () => {
+  const addReservation = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     const newReservation: Reservation = {
       name: name,
       userid: email,
@@ -102,6 +103,7 @@ export default function User() {
           isClosable: true,
         });
         console.log('Success', data)
+        setSubmitted(true);
       }
     })
   }
@@ -116,6 +118,7 @@ export default function User() {
   // Component to add a new reservation
   const AddReservation = () => (
     <>
+      {!submitted && 
       <form onSubmit={addReservation}>
         <StyledBox>
           <FormControl>
@@ -210,6 +213,8 @@ export default function User() {
         </StyledBox>
         <Button backgroundColor="#cd4346ff" color="white" type="submit">Reserve</Button>
       </form>
+    }
+    {submitted && <StyledBox> Reservation created, have a nice day! </StyledBox>}
     </>
   );
 
@@ -290,8 +295,8 @@ export default function User() {
           What would you like to do today?
         </MenuButton>
         <MenuList>
-          <MenuItem onClick={() => {setAdding(!adding); setChecking(false)}}>Reserve a table</MenuItem>
-          <MenuItem onClick={() => {setChecking(!checking); setAdding(false)}}>Check reservation</MenuItem>
+          <MenuItem onClick={() => {setAdding(!adding); setChecking(false); setSubmitted(false)}}>Reserve a table</MenuItem>
+          <MenuItem onClick={() => {setChecking(!checking); setAdding(false); setSubmitted(false)}}>Check reservation</MenuItem>
         </MenuList>
       </Menu>
       {adding && <AddReservation />}
