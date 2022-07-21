@@ -16,8 +16,10 @@ import {
   PopoverArrow,
   PopoverCloseButton,
   PopoverAnchor,
-  Button
+  Button,
+  Icon,
 } from '@chakra-ui/react'
+import { StarIcon } from '@chakra-ui/icons'
 import * as AWS from 'aws-sdk'
 
 const docClient = new AWS.DynamoDB.DocumentClient()
@@ -30,6 +32,12 @@ const boxStyle = {
 const dateStyle = {
   padding: '10px',
   font: '30px',
+}
+
+const popoverHeaderStyle = {
+  display: 'inline-flex',
+  justifyContent: 'space-around',
+  paddingLeft: '10px'
 }
 
 export type Reservation = {
@@ -121,7 +129,9 @@ export default function Restaurant() {
               <PopoverContent>
                 <PopoverArrow />
                 <PopoverCloseButton />
-                <PopoverHeader>{element.userid}</PopoverHeader>
+                <PopoverHeader>{element.userid}
+                 {element.special_occasion && <div style={popoverHeaderStyle}><Icon as={StarIcon} w={4} h={4}/></div>}
+                </PopoverHeader>
                 <PopoverBody>
                 Email: {element.userid}
                 <br/>
