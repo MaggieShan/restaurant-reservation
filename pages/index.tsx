@@ -1,8 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
-import type { NextPage } from 'next'
-import { Box } from "@chakra-ui/react"
-import styles from '../styles/Home.module.css'
-import UserTabs from './UserTabs'
+import type { NextPage } from 'next';
+import { Box } from "@chakra-ui/react";
+import styles from '../styles/Home.module.css';
+import UserTabs from './UserTabs';
 
 const Home: NextPage = () => {
   return (
@@ -14,7 +14,7 @@ const Home: NextPage = () => {
         <UserTabs />
       </main>
     </Box>
-  )
+  );
 }
 
-export default Home
+export default Home;
